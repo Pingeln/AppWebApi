@@ -22,9 +22,9 @@ namespace Models
         }
 
         // Generate random comments for attractions
-        public List<IComment> GenerateRandomComments(int numberOfComments)
+        public List<csComment> GenerateRandomComments(int numberOfComments)
         {
-            List<IComment> comments = new List<IComment>();
+            List<csComment> comments = new List<csComment>();
             for (int i = 0; i < numberOfComments; i++)
             {
                 var comment = new csComment
@@ -53,9 +53,9 @@ namespace Models
         }
 
         // Generate random addresses
-        public List<IAddress> GenerateRandomAddresses(int numberOfAddresses)
+        public List<csAddress> GenerateRandomAddresses(int numberOfAddresses)
         {
-            List<IAddress> addresses = new List<IAddress>();
+            List<csAddress> addresses = new List<csAddress>();
             for (int i = 0; i < numberOfAddresses; i++)
             {
                 var address = new csAddress

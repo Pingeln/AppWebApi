@@ -12,18 +12,16 @@ namespace DbModels
     public class csAttractionDbM
     {
         [Key]
+        [Required]
         public Guid AttractionID { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
-        [Required]
         public string Category { get; set; }
 
-        [Required]
         public string Description { get; set; }
 
-        public List<csCommentDbM> Comments { get; set; } = new List<csCommentDbM>();
+        public List<csCommentDbM> Comments { get; set; }
 
         public Guid AddressID { get; set; }
         [ForeignKey("AddressID")]

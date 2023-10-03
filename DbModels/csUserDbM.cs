@@ -12,11 +12,11 @@ namespace DbModels
     public class csUserDbM
     {
         [Key]
+        [Required]
         public Guid UserID { get; set; }
 
-        [Required]
         public string UserName { get; set; }
 
-        public List<csCommentDbM> Comments { get; set; } = new List<csCommentDbM>();
+        public List<csCommentDbM> Comments { get; set; }
     }
 }

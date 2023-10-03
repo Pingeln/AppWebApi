@@ -1,6 +1,5 @@
 using Configuration;
 using DbContext;
-using DbRepos;
 using Microsoft.EntityFrameworkCore;
 using Services;
 using DbContext;
@@ -22,13 +21,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 #endregion
 
-// Retrieve the connection string named "DefaultConnection" from the application's configuration
-var connectionString = csAppConfig.ConfigurationRoot.GetConnectionString("DefaultConnection");
+/*
+var connectionString = csAppConfig.ConfigurationRoot.GetConnectionString("SQLServer-goodfriendsefc-docker-sysadmin");
 
 // Register csMainDbContext as a service in the DI container
 builder.Services.AddDbContext<csMainDbContext>(options =>
     options.UseSqlServer(connectionString)
 );
+*/
 
 var app = builder.Build();
 

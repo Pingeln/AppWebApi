@@ -47,7 +47,7 @@ public sealed class csAppConfig
         var builder = new ConfigurationBuilder()
                             .SetBasePath(Directory.GetCurrentDirectory())
                             .AddJsonFile(Appsettingfile, optional: true, reloadOnChange: true)
-                            .AddUserSecrets("e883ea2f-2433-410f-b47c-30a8237e4512", reloadOnChange: true);
+                            .AddUserSecrets("a3b3eede-d44d-49ff-a12c-860407a9583a", reloadOnChange: true);
 
         _configuration = builder.Build();
 

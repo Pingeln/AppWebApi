@@ -18,6 +18,10 @@ public class csMainDbContext : Microsoft.EntityFrameworkCore.DbContext
 {
     static public string Hello { get; } = $"Hello from namespace {nameof(DbContext)}, class {nameof(csMainDbContext)}";
 
+    #region C# models of the database tables or views
+    public DbSet<csUserDbM> Users { get; set; }
+    #endregion
+
     #region get right context from DbSet configuration in json file and UserLogin
     public static DbContextOptionsBuilder<csMainDbContext> DbContextOptions(DbLoginDetail loginDetail)
     {

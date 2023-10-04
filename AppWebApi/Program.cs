@@ -22,7 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 #endregion
 
-/* 1. Retrieve the connection string from your configuration
+/*1. Retrieve the connection string from your configuration
 var connectionString = csAppConfig.DbSetActive.DbLogins.Find(
     i => i.DbServer == "SQLServer" && i.DbUserLogin == "sysadmin").DbConnectionString;
 
@@ -30,6 +30,8 @@ builder.Services.AddDbContext<csMainDbContext>(options =>
     options.UseSqlServer(connectionString)
 );
 */
+
+builder.Services.AddDbContext<csMainDbContext.SqlServerDbContext>();
 
 var app = builder.Build();
 

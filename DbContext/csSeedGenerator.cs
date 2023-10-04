@@ -23,20 +23,16 @@ public class csSeedGenerator
 
     public void GenerateData()
     {
-        // Seeding Addresses
-        var addresses = GenerateAddresses(10); // Generating 10 addresses as an example
-        _context.Address.AddRange(addresses);
-
-        // Seeding Users
-        var users = GenerateUsers(10); // Generating 10 users as an example
+        var users = GenerateUsers(50);
         _context.Users.AddRange(users);
 
-        // Seeding Attractions
-        var attractions = GenerateAttractions(10, addresses); // Generating 10 attractions
+        var addresses = GenerateAddresses(100);
+        _context.Address.AddRange(addresses);
+
+        var attractions = GenerateAttractions(1000, addresses);
         _context.Attraction.AddRange(attractions);
 
-        // Seeding Comments
-        var comments = GenerateComments(50, users, attractions); // Generating 50 comments
+        var comments = GenerateComments(10, 20, users, attractions);
         _context.Comment.AddRange(comments);
 
         _context.SaveChanges();
@@ -51,8 +47,8 @@ public class csSeedGenerator
             {
                 AddressID = Guid.NewGuid(),
                 Street = _randomDataGenerator.RandomString(10),
-                City = _randomDataGenerator.RandomString(6),
-                Country = _randomDataGenerator.RandomString(8),
+                City = _randomDataGenerator.RandomCity(),
+                Country = _randomDataGenerator.RandomCountry(),
                 ZipCode = _randomDataGenerator.RandomString(5)
             });
         }
@@ -67,7 +63,7 @@ public class csSeedGenerator
             list.Add(new csUserDbM
             {
                 UserID = Guid.NewGuid(),
-                UserName = _randomDataGenerator.RandomString(7)
+                UserName = _randomDataGenerator.RandomUserName()
             });
         }
         return list;
@@ -90,18 +86,22 @@ public class csSeedGenerator
         return list;
     }
 
-    private List<csCommentDbM> GenerateComments(int count, List<csUserDbM> users, List<csAttractionDbM> attractions)
+    private List<csCommentDbM> GenerateComments(int minComments, int maxComments, List<csUserDbM> users, List<csAttractionDbM> attractions)
     {
         var list = new List<csCommentDbM>();
-        for (int i = 0; i < count; i++)
+        foreach (var attraction in attractions)
         {
-            list.Add(new csCommentDbM
+            int commentCount = _randomDataGenerator.RandomNumber(minComments, maxComments + 1);
+            for (int i = 0; i < commentCount; i++)
             {
-                CommentID = Guid.NewGuid(),
-                Text = _randomDataGenerator.RandomString(25),
-                UserID = users[_randomDataGenerator.RandomNumber(0, users.Count)].UserID,
-                AttractionID = attractions[_randomDataGenerator.RandomNumber(0, attractions.Count)].AttractionID
-            });
+                list.Add(new csCommentDbM
+                {
+                    CommentID = Guid.NewGuid(),
+                    Text = _randomDataGenerator.RandomString(25),
+                    UserID = users[_randomDataGenerator.RandomNumber(0, users.Count)].UserID,
+                    AttractionID = attraction.AttractionID
+                });
+            }
         }
         return list;
     }

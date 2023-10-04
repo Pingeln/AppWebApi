@@ -20,16 +20,16 @@ namespace AppWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DatabaseController : ControllerBase
+    public class SeedController : ControllerBase
     {
         private readonly csMainDbContext _context;
 
-        public DatabaseController(csMainDbContext context)
+        public SeedController(csMainDbContext.SqlServerDbContext context)
         {
             _context = context;
         }
 
-        [HttpGet("seed")]
+        [HttpPost("Seed")]
         public IActionResult SeedDatabase()
         {
             try
@@ -45,24 +45,65 @@ namespace AppWebApi.Controllers
                 return BadRequest($"An error occurred: {ex.Message}");
             }
         }
+
+        [HttpPost("clearSeededData")]
+        public IActionResult ClearSeededData()
+        {
+            try
+            {
+                // Remove seeded data
+                _context.Users.RemoveRange(_context.Users);
+                _context.Address.RemoveRange(_context.Address);
+                _context.Attraction.RemoveRange(_context.Attraction);
+                _context.Comment.RemoveRange(_context.Comment);
+                _context.SaveChanges();
+
+                return Ok("Seeded data removed successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error occurred while clearing seeded data: {ex.Message}");
+            }
+        }
     }
 
     [ApiController]
     [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    public class InfoController : ControllerBase
     {
         private readonly csMainDbContext _context;
 
-        public UsersController(csMainDbContext context)
+        public InfoController(csMainDbContext.SqlServerDbContext context)
         {
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("User Data")]
         public IActionResult GetAll()
         {
-            var users = _context.Users.ToList();
+            var users = _context.Users
+            .Include(u => u.Comments)
+            .Select(u => new
+            {
+                u.UserID,
+                u.UserName,
+                Comments = u.Comments.Count
+            }).ToList();
+
             return Ok(users);
+        }
+        [HttpGet("All data")]
+        public IActionResult GetInfo()
+        {
+            var info = new
+            {
+                UsersCount = _context.Users.Count(),
+                CommentsCount = _context.Comment.Count(),
+                AttractionsCount = _context.Attraction?.Count() ?? 0,
+                AddressesCount = _context.Address?.Count() ?? 0
+            };
+
+            return Ok(info);
         }
     }
 }

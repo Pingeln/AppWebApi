@@ -2,12 +2,13 @@ using Configuration;
 using DbContext;
 using Microsoft.EntityFrameworkCore;
 using Services;
-using DbContext;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 #region Insert standard WebApi services
+
 // NOTE: global cors policy needed for JS and React frontends
 builder.Services.AddCors();
 
@@ -21,10 +22,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 #endregion
 
-/*
-var connectionString = csAppConfig.ConfigurationRoot.GetConnectionString("SQLServer-goodfriendsefc-docker-sysadmin");
+/* 1. Retrieve the connection string from your configuration
+var connectionString = csAppConfig.DbSetActive.DbLogins.Find(
+    i => i.DbServer == "SQLServer" && i.DbUserLogin == "sysadmin").DbConnectionString;
 
-// Register csMainDbContext as a service in the DI container
 builder.Services.AddDbContext<csMainDbContext>(options =>
     options.UseSqlServer(connectionString)
 );

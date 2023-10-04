@@ -20,6 +20,10 @@ public class csMainDbContext : Microsoft.EntityFrameworkCore.DbContext
 
     #region C# models of the database tables or views
     public DbSet<csUserDbM> Users { get; set; }
+    public DbSet<csAddressDbM> Address { get; set; }
+    public DbSet<csCommentDbM> Comment { get; set; }
+    public DbSet<csAttractionDbM> Attraction { get; set; }
+    
     #endregion
 
     #region get right context from DbSet configuration in json file and UserLogin

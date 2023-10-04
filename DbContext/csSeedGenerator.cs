@@ -46,10 +46,10 @@ public class csSeedGenerator
             list.Add(new csAddressDbM
             {
                 AddressID = Guid.NewGuid(),
-                Street = _randomDataGenerator.RandomString(10),
+                Street = _randomDataGenerator.RandomStreet(),
                 City = _randomDataGenerator.RandomCity(),
                 Country = _randomDataGenerator.RandomCountry(),
-                ZipCode = _randomDataGenerator.RandomString(5)
+                ZipCode = _randomDataGenerator.RandomString(5)  // Consider creating a dedicated method for zip codes if necessary
             });
         }
         return list;
@@ -77,9 +77,9 @@ public class csSeedGenerator
             list.Add(new csAttractionDbM
             {
                 AttractionID = Guid.NewGuid(),
-                Name = _randomDataGenerator.RandomString(8),
-                Category = _randomDataGenerator.RandomString(6),
-                Description = _randomDataGenerator.RandomString(20),
+                Name = _randomDataGenerator.RandomAttractionName(),
+                Category = _randomDataGenerator.RandomCategory(),
+                Description = _randomDataGenerator.RandomString(20),  // Adjust if you want longer descriptions
                 AddressID = addresses[_randomDataGenerator.RandomNumber(0, addresses.Count)].AddressID
             });
         }
@@ -105,4 +105,5 @@ public class csSeedGenerator
         }
         return list;
     }
+
 }

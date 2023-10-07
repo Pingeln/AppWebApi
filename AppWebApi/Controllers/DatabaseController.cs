@@ -157,6 +157,7 @@ namespace AppWebApi.Controllers
         public IActionResult GetAttractionsWithoutComments()
         {
             var attractions = _context.Attraction
+                            .Include(a => a.Address)  // This will load the Address related entity
                             .Where(a => !a.Comments.Any())
                             .ToList();
 

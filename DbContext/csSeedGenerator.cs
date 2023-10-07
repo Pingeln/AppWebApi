@@ -32,7 +32,7 @@ public class csSeedGenerator
         var attractions = GenerateAttractions(1000, addresses);
         _context.Attraction.AddRange(attractions);
 
-        var comments = GenerateComments(10, 20, users, attractions);
+        var comments = GenerateComments(0, 20, users, attractions);
         _context.Comment.AddRange(comments);
 
         _context.SaveChanges();
@@ -49,7 +49,7 @@ public class csSeedGenerator
                 Street = _randomDataGenerator.RandomStreet(),
                 City = _randomDataGenerator.RandomCity(),
                 Country = _randomDataGenerator.RandomCountry(),
-                ZipCode = _randomDataGenerator.RandomString(5)  // Consider creating a dedicated method for zip codes if necessary
+                ZipCode = _randomDataGenerator.RandomString(5)  // Could rework this later if I want pure digits instead of letters but not necessary for the assignment
             });
         }
         return list;
@@ -79,13 +79,14 @@ public class csSeedGenerator
                 AttractionID = Guid.NewGuid(),
                 Name = _randomDataGenerator.RandomAttractionName(),
                 Category = _randomDataGenerator.RandomCategory(),
-                Description = _randomDataGenerator.RandomString(20),  // Adjust if you want longer descriptions
+                Description = _randomDataGenerator.RandomString(20), 
                 AddressID = addresses[_randomDataGenerator.RandomNumber(0, addresses.Count)].AddressID
             });
         }
         return list;
     }
 
+    // comments are just random letters, works fine this way though for now, rework later
     private List<csCommentDbM> GenerateComments(int minComments, int maxComments, List<csUserDbM> users, List<csAttractionDbM> attractions)
     {
         var list = new List<csCommentDbM>();

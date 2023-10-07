@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Configuration;
 using Models;
 
-using Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
@@ -30,7 +29,7 @@ namespace AppWebApi.Controllers
         }
 
         // seed the database with test data in line with requirments for the project
-        [HttpPost("Seed")]
+        [HttpPost("Seed as per G requirments")]
         public IActionResult SeedDatabase()
         {
             try

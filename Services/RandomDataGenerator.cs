@@ -113,7 +113,9 @@ public class RandomDataGenerator
 
         string attractionName;
 
-        // Generate names until a unique one is found
+        // Generate names until a unique one is found - this could be made to try a few times and stop if it cant find a unique one
+        // but since my seed controller has a fixed ammount of things to generate this is sufficient to never run into problems.
+        // Make sure to fix this later.
         do
         {
             attractionName = $"{startWords[_random.Next(startWords.Count)]} " +
